@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Webduino Blockly Demo 01</title>
+    <link rel="stylesheet" type="text/css" href="newyear2018.css">
+    <script src="https://blocklypro.webduino.io/components/jquery/dist/jquery.min.js"></script>
+    <script src="https://webduino.io/components/webduino-js/dist/webduino-all.min.js"></script>
+    <script src="https://blockly.webduino.io/webduino-blockly.js"></script>
+    <script src="https://blockly.webduino.io/lib/firebase.js"></script>
+    <script src="https://blockly.webduino.io/lib/runtime.min.js"></script>
+</head>
+
+<body style="background-color: #ffe8d4;">
+    <div class="container">
+        <div class="row">
+            <div class="setting-content">
+                <h4>Webduino Smart 開發板 ID <span id="ready">( 未連線 )</span></h4>
+                <input type="text" id="deviceId">
+                <button id="connect_btn">連線</button>
+            </div>
+        </div>
+    </div>
+    <div>
+        <span id="demo-area-01-show">
+            <img src="img/newyear.png" alt="">
+        </span>
+    </div>
+    <div id="newyear-title">
+        <p>按壓開關看看狗年吉祥話吧</p>
+        <h3>Webduino 來拜年</h3>
+    </div>
+    <script>
+    (function() {
+
+        (async function() {
+
+            var rgbled;
+            var button;
+            var name2;
+            var result;
+            var deviceId = $('#deviceId'),
+                connect_btn = $('#connect_btn'),
+                ready = $('#ready');
+
+
+            if (localStorage.boardName) {
+                deviceId.val(localStorage.boardName);
+            }
+
+            function math_random_int(a, b) {
+                if (a > b) {
+                    // Swap a and b to ensure a is smaller.
+                    var c = a;
+                    a = b;
+                    b = c;
+                }
+                return Math.floor(Math.random() * (b - a + 1) + a);
+            }
+
+            function colour_random() {
+                var num = Math.floor(Math.random() * Math.pow(2, 24));
+                return '#' + ('00000' + num.toString(16)).substr(-6);
+            }
+
+
+            connect_btn.on('click', function() {
+                localStorage.boardName = deviceId.val();
+                boardReady(deviceId.val(), async function(board) {
+                    board.systemReset();
+                    board.samplingInterval = 250;
+                    document.getElementById("ready").innerHTML = (['( 已連線 )'].join(''));
+                    rgbled = getRGBLedCathode(board, 15, 12, 13);
+                    button = getButton(board, 4);
+                    // name2 = ['開花結狗', '好運汪來', '狗然厲害', '汪汪招財', '十犬十美'];
+                    // document.getElementById("demo-area-01-show").innerHTML = '按壓開關取得狗年吉祥話';
+                    name2 = ['https://webduino.io/onsale/img/luckybag2-8.jpg', 'https://webduino.io/onsale/img/luckybag2-10.jpg', 'https://webduino.io/onsale/img/luckybag2-9.jpg', 'https://webduino.io/img/buy/webduino-package-luckybag1-01s.jpg', 'https://webduino.io/img/buy/webduino-package-luckybag2-01s.jpg'];
+                    button.on("pressed", async function() {
+                        console.log("pressed");
+                        // result = name2[math_random_int(1, 5) - 1];
+                        result = '<img src="' + name2[math_random_int(1, 5) - 1]+ '">';
+                        document.getElementById("demo-area-01-show").style.color = '#009900';
+                        rgbled.setColor(colour_random());
+                        document.getElementById("demo-area-01-show").innerHTML = result;
+                        await delay(3);
+                        document.getElementById("demo-area-01-show").style.color = '#000000';
+                        rgbled.setColor('#000000');
+                        // document.getElementById("demo-area-01-show").innerHTML = '按壓開關看看狗年吉祥話吧';
+                        document.getElementById("newyear-title").style.display = "block";
+                    }); //button.on
+                }); //boardReady
+            });
+        }()); //async function
+
+    }());
+    </script>
+</body>
