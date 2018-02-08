@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Webduino Blockly Demo 01</title>
+    <title>Webduino 猜謎趣</title>
     <script src="https://blocklypro.webduino.io/components/jquery/dist/jquery.min.js"></script>
     <script src="https://webduino.io/components/webduino-js/dist/webduino-all.min.js"></script>
     <script src="https://blockly.webduino.io/webduino-blockly.js"></script>
@@ -13,6 +13,15 @@
 </head>
 
 <body>
+    <div class="container">
+        <div class="row">
+            <div class="setting-content">
+                <h4>Webduino Smart 開發板 ID <span id="ready">( 未連線 )</span></h4>
+                <input type="text" id="deviceId">
+                <button id="connect_btn">連線</button>
+            </div>
+        </div>
+    </div>
     <div><span id="demo-area-01-show">123</span></div>
     <script>
     (function() {
@@ -21,58 +30,66 @@
         var rgbled;
         var button;
         var a;
+        var deviceId = $('#deviceId'),
+            connect_btn = $('#connect_btn'),
+            ready = $('#ready');
 
-
-        boardReady({ board: 'Smart', device: '10y2vmEy', transport: 'mqtt' }, function(board) {
-            board.samplingInterval = 250;
-            n = 1;
-            m = 1;
-            rgbled = getRGBLedCathode(board, 15, 12, 13);
-            button = getPullupButton(board, 4);
-            a = [
-                ['兩隻狗狗在對話 ( 猜一字 )', '獄'],
-                ['A、B、C、D 哪一隻狗不會說話？', 'A 狗，因為啞巴 ( 台語 )'],
-                ['狗對你\'\'旺\'\'的時候.你要怎麼讓牠不叫?', '說two.因為牠不會說three'],
-                ['為什麼遇到惡狗要對他碎碎念?', '因為"念念不忘(不汪)'],
-                ['什麼狗得毛是綠的？', '奇異果因為（奇異狗）'],
-                ['什麼狗不會叫', '熱狗'],
-                ['小狗、小貓、小牛，三隻動物要背唐詩，誰是第一個？', '小狗因為 (汪汪先背) 旺旺仙貝'],
-                ['肉包子打狗? ( 諺語 )', '有去無回'],
-                ['狗咬人，人咬狗（猜一成語）', '以牙還牙'],
-                ['青色的狗？( 猜一字 )', '猜']
-            ];
-            document.getElementById("demo-area-01-show").style.fontSize = 20 + "px";
-            document.getElementById("demo-area-01-show").style.lineHeight = 26 + "px";
-            document.getElementById("demo-area-01-show").innerHTML = '按壓開關開始猜燈謎';
-            button.on("pressed", function() {
-                console.log("pressed");
-                m = m * -1;
-                if (m > 0 && n <= a.length) {
-                    document.getElementById("demo-area-01-show").style.color = '#ff0000';
-                    rgbled.setColor('#009900');
-                    document.getElementById("demo-area-01-show").innerHTML = ([n, '/', a.length, ' 解答：', (a[n - 1])[1]].join(''));
-                    n = n + 1;
-                } else if (m < 0 && n <= a.length) {
-                    document.getElementById("demo-area-01-show").style.color = '#000000';
-                    rgbled.setColor('#ff0000');
-                    document.getElementById("demo-area-01-show").innerHTML = ([n, '/', a.length, ' ', (a[n - 1])[0]].join(''));
-                } else {
-                    rgbled.setColor('#000000');
-                    document.getElementById("demo-area-01-show").style.color = '#000000';
-                    document.getElementById("demo-area-01-show").innerHTML = '遊戲結束<br/>「長按按鈕開關」重新遊戲';
-                }
-
-            });
-            button.on("longPress", function() {
-                console.log("longPress");
-                rgbled.setColor('#000000');
-                document.getElementById("demo-area-01-show").style.color = '#000000';
+        if (localStorage.boardName) {
+            deviceId.val(localStorage.boardName);
+        }
+        connect_btn.on('click', function() {
+            localStorage.boardName = deviceId.val();
+            boardReady(deviceId.val(), function(board) {
+                board.samplingInterval = 250;
                 n = 1;
                 m = 1;
+                rgbled = getRGBLedCathode(board, 15, 12, 13);
+                button = getPullupButton(board, 4);
+                a = [
+                    ['兩隻狗狗在對話 ( 猜一字 )', '獄'],
+                    ['A、B、C、D 哪一隻狗不會說話？', 'A 狗，因為啞巴 ( 台語 )'],
+                    ['狗對你\'\'旺\'\'的時候.你要怎麼讓牠不叫?', '說two.因為牠不會說three'],
+                    ['為什麼遇到惡狗要對他碎碎念?', '因為"念念不忘(不汪)'],
+                    ['什麼狗得毛是綠的？', '奇異果因為（奇異狗）'],
+                    ['什麼狗不會叫', '熱狗'],
+                    ['小狗、小貓、小牛，三隻動物要背唐詩，誰是第一個？', '小狗因為 (汪汪先背) 旺旺仙貝'],
+                    ['肉包子打狗? ( 諺語 )', '有去無回'],
+                    ['狗咬人，人咬狗（猜一成語）', '以牙還牙'],
+                    ['青色的狗？( 猜一字 )', '猜']
+                ];
+                document.getElementById("demo-area-01-show").style.fontSize = 20 + "px";
+                document.getElementById("demo-area-01-show").style.lineHeight = 26 + "px";
                 document.getElementById("demo-area-01-show").innerHTML = '按壓開關開始猜燈謎';
+                button.on("pressed", function() {
+                    console.log("pressed");
+                    m = m * -1;
+                    if (m > 0 && n <= a.length) {
+                        document.getElementById("demo-area-01-show").style.color = '#ff0000';
+                        rgbled.setColor('#009900');
+                        document.getElementById("demo-area-01-show").innerHTML = ([n, '/', a.length, ' 解答：', (a[n - 1])[1]].join(''));
+                        n = n + 1;
+                    } else if (m < 0 && n <= a.length) {
+                        document.getElementById("demo-area-01-show").style.color = '#000000';
+                        rgbled.setColor('#ff0000');
+                        document.getElementById("demo-area-01-show").innerHTML = ([n, '/', a.length, ' ', (a[n - 1])[0]].join(''));
+                    } else {
+                        rgbled.setColor('#000000');
+                        document.getElementById("demo-area-01-show").style.color = '#000000';
+                        document.getElementById("demo-area-01-show").innerHTML = '遊戲結束<br/>「長按按鈕開關」重新遊戲';
+                    }
 
-            });
-        });
+                });
+                button.on("longPress", function() {
+                    console.log("longPress");
+                    rgbled.setColor('#000000');
+                    document.getElementById("demo-area-01-show").style.color = '#000000';
+                    n = 1;
+                    m = 1;
+                    document.getElementById("demo-area-01-show").innerHTML = '按壓開關開始猜燈謎';
+
+                }); //button.on
+            }); //boardReady
+        }); //connect_btn
 
     }());
     </script>
