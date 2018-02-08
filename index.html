@@ -4,8 +4,17 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Webduino Blockly Demo 01</title>
+    <link rel="shortcut icon" href="img/webduino-logo.png" type="image/vnd.microsoft.icon">
+    <link rel="shortcut icon" href="img/webduino-logo.png" type="image/x-icon">
+    <title>Webduino 來拜年</title>
     <link rel="stylesheet" type="text/css" href="newyear2018.css">
+    <meta name="description" content="Webduino 來拜年">
+    <meta itemprop="description" content="Webduino 來拜年">
+    <meta itemprop="image" content="https://birteliu.github.io/2018newyear/img/newyear-0.png">
+    <meta property="og:title" content="Webduino 來拜年">
+    <meta property="og:url" content="https://birteliu.github.io/2018newyear/index.html">
+    <meta property="og:image" content="https://birteliu.github.io/2018newyear/img/newyear-0.png">
+    <meta property="og:description" content="Webduino 來拜年">
     <script src="https://blocklypro.webduino.io/components/jquery/dist/jquery.min.js"></script>
     <script src="https://webduino.io/components/webduino-js/dist/webduino-all.min.js"></script>
     <script src="https://blockly.webduino.io/webduino-blockly.js"></script>
@@ -30,7 +39,6 @@
     </div>
     <div id="newyear-title">
         <p>按壓 Smart 上的開關看看狗年吉祥話吧</p>
-        <h3>Webduino 來拜年</h3>
     </div>
     <script>
     (function() {
@@ -84,14 +92,14 @@
                         document.getElementById("demo-area-01-show").style.color = '#009900';
                         rgbled.setColor(colour_random());
                         document.getElementById("demo-area-01-show").innerHTML = result;
-                        await delay(3);
+                        await delay(2);
                         document.getElementById("demo-area-01-show").style.color = '#000000';
                         rgbled.setColor('#000000');
                         // document.getElementById("demo-area-01-show").innerHTML = '按壓開關看看狗年吉祥話吧';
                         document.getElementById("newyear-title").style.display = "block";
                     }); //button.on
                 }); //boardReady
-            });
+            }); //connect_btn
         }()); //async function
 
     }());

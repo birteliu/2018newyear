@@ -14,6 +14,8 @@
     -webkit-touch-callout: none;
     border: none;
     outline: none;
+    max-height: 100vh;
+    overflow-y: hidden;
 }
 a {
     color: inherit;
@@ -25,12 +27,14 @@ a {
 }
 .setting-content {
 	margin: 10px;
-	padding: 20px;
+	padding: 10px 25px;
+	height: 25vh;
+	overflow-y: scroll;
 }
-.setting-content input {
+.setting-content input { 
 	width: 100%;
 	border-radius: 5px;
-	padding: 10px;
+	padding: 2px 10px;
 	border: 1px solid #EA5944;
 }
 .setting-content span {
@@ -41,7 +45,7 @@ a {
 .setting-content button {
 	display: inline-block;
 	width: 100%;
-	padding: 12px;
+	padding: 11px;
 	margin-top: 10px;
 	background-color: #EA5944;
 	border-radius: 5px;
@@ -49,17 +53,22 @@ a {
 }
 img {
 	display: block;
+  max-height: 100%;
   max-width: 100%;
-  height: auto;
+  margin: auto;
+  margin-top: 10px;
 }
 .main-content {
 	margin: 5px 15px;
+	height: 65vh;
+	margin: auto;
+	overflow-y: scroll;
 }
 #newyear-title {
 	position: absolute;
 	text-align: center;
-	/*display: none;*/
-	bottom: 5%;
+	height: 7vh;
+	bottom: 0;
 	right:0;
   left:0;
   margin: 0 auto;
@@ -67,4 +76,31 @@ img {
 #newyear-title h3 {
 	color: #EA5944;
 	margin: 0;
+}
+@media (min-width: 600px) {
+	.setting-content {
+		width: 70%;
+		margin: auto;
+	}
+	.setting-content input, .setting-content button {
+		width: 49%;
+	}
+	.setting-content h4 {
+		margin-bottom: 0;
+	}
+}
+
+@media (min-width: 800px) {
+	.setting-content {
+		width: 50%;
+		margin: auto;
+	}
+}
+@media (min-width: 1000px) {
+	.setting-content {
+		height: 20vh;
+	}
+	img {
+		margin-top: 0;
+	}
 }
