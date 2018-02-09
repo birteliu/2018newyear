@@ -270,11 +270,13 @@ a {
 #demo-area-01-show {
     pointer-events: auto!important;
 }
+.container {
+	height: 91vh;
+	overflow-y: scroll;
+}
 .setting-content {
 	margin: 10px;
 	padding: 10px 25px;
-	height: 25vh;
-	overflow-y: scroll;
 }
 .setting-content input { 
 	width: 100%;
@@ -290,7 +292,7 @@ a {
 .setting-content button {
 	display: inline-block;
 	width: 100%;
-	padding: 11px;
+	padding: 12px;
 	margin-top: 10px;
 	background-color: #EA5944;
 	border-radius: 5px;
@@ -301,37 +303,32 @@ img {
   max-height: 100%;
   max-width: 100%;
   margin: auto;
-  margin-top: 10px;
 }
 .main-content {
 	margin: 5px 15px;
-	height: 65vh;
+	padding: 10px;
 	margin: auto;
 	overflow-y: scroll;
 }
 #newyear-title {
 	position: absolute;
-	text-align: center;
-	height: 7vh;
+	height: 8vh;
 	bottom: 0;
 	right:0;
   left:0;
+  line-height: 8vh;
+  background-color: #EA5944;
+  color: #fff;
+	text-align: center;
   margin: 0 auto;
-}
-#newyear-title h3 {
-	color: #EA5944;
-	margin: 0;
 }
 @media (min-width: 600px) {
 	.setting-content {
 		width: 70%;
 		margin: auto;
 	}
-	.setting-content input, .setting-content button {
-		width: 49%;
-	}
-	.setting-content h4 {
-		margin-bottom: 0;
+	img {
+		width: 70%;
 	}
 }
 
@@ -340,12 +337,12 @@ img {
 		width: 50%;
 		margin: auto;
 	}
+	img {
+		width: 50%;
+	}
 }
 @media (min-width: 1000px) {
-	.setting-content {
-		height: 20vh;
-	}
 	img {
-		margin-top: 0;
+		width: 45%;
 	}
 }
