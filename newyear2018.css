@@ -281,7 +281,7 @@ a {
 .setting-content input { 
 	width: 100%;
 	border-radius: 5px;
-	padding: 5px 10px;
+	padding: 8px 10px;
 	border: 1px solid #EA5944;
 }
 .setting-content span {
@@ -292,7 +292,7 @@ a {
 .setting-content button {
 	display: inline-block;
 	width: 100%;
-	padding: 12px;
+	padding: 11px;
 	margin-top: 10px;
 	background-color: #EA5944;
 	border-radius: 5px;
