@@ -31,7 +31,6 @@
                 <button id="connect_btn">連線</button>
             </div>
         </div>
-    
     <div class="main-content">
         <span id="demo-area-01-show">
             <img src="img/newyear.png" alt="">
@@ -54,7 +53,6 @@
                 connect_btn = $('#connect_btn'),
                 ready = $('#ready');
 
-
             if (localStorage.boardName) {
                 deviceId.val(localStorage.boardName);
             }
@@ -74,7 +72,6 @@
                 return '#' + ('00000' + num.toString(16)).substr(-6);
             }
 
-
             connect_btn.on('click', function() {
                 localStorage.boardName = deviceId.val();
                 boardReady(deviceId.val(), async function(board) {
@@ -83,12 +80,9 @@
                     document.getElementById("ready").innerHTML = (['( 已連線 )'].join(''));
                     rgbled = getRGBLedCathode(board, 15, 12, 13);
                     button = getButton(board, 4);
-                    // name2 = ['開花結狗', '好運汪來', '狗然厲害', '汪汪招財', '十犬十美'];
-                    // document.getElementById("demo-area-01-show").innerHTML = '按壓開關取得狗年吉祥話';
                     name2 = ['img/newyear-1.png', 'img/newyear-2.png', 'img/newyear-3.png', 'img/newyear-4.png', 'img/newyear-5.png'];
                     button.on("pressed", async function() {
                         console.log("pressed");
-                        // result = name2[math_random_int(1, 5) - 1];
                         result = '<img src="' + name2[math_random_int(1, 5) - 1]+ '">';
                         document.getElementById("demo-area-01-show").style.color = '#009900';
                         rgbled.setColor(colour_random());
@@ -96,13 +90,11 @@
                         await delay(2);
                         document.getElementById("demo-area-01-show").style.color = '#000000';
                         rgbled.setColor('#000000');
-                        // document.getElementById("demo-area-01-show").innerHTML = '按壓開關看看狗年吉祥話吧';
                         document.getElementById("newyear-title").style.display = "block";
                     }); //button.on
                 }); //boardReady
             }); //connect_btn
         }()); //async function
-
     }());
     </script>
 </body>
