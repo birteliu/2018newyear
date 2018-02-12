@@ -55,6 +55,7 @@ h4 {
 }
 p {
     margin: 0;
+    text-align: center;
 }
 
 .row {
@@ -77,9 +78,10 @@ p {
     padding-left: 15px;
     margin-right: auto;
     margin-left: auto;
+    width: 100%;
 }
 
-@media (min-width:768px) {
+/*@media (min-width:768px) {
     .container {
         width: 750px;
     }
@@ -107,7 +109,7 @@ p {
     .container {
         width: 1170px;
     }
-}
+}*/
 
 .container:before,
 .container:after,
@@ -154,7 +156,7 @@ input::-moz-focus-inner {
 
 .setting-content {
     margin: 10px;
-    padding: 10px 25px;
+    padding: 10px 25px 5px 25px;
 }
 
 .setting-content input {
@@ -189,6 +191,7 @@ img {
     max-width: 100%;
     margin: auto;
     border: 0;
+    padding-top: 5px;
 }
 
 .main-content {
