@@ -43,7 +43,7 @@
     <script>
     (function() {
 
-        (async function() {
+        (function() {
 
             var rgbled;
             var button;
@@ -74,14 +74,14 @@
 
             connect_btn.on('click', function() {
                 localStorage.boardName = deviceId.val();
-                boardReady(deviceId.val(), async function(board) {
+                boardReady(deviceId.val(), function(board) {
                     board.systemReset();
                     board.samplingInterval = 250;
                     document.getElementById("ready").innerHTML = (['( 已連線 )'].join(''));
                     rgbled = getRGBLedCathode(board, 15, 12, 13);
                     button = getButton(board, 4);
                     name2 = ['img/newyear-1.png', 'img/newyear-2.png', 'img/newyear-3.png', 'img/newyear-4.png', 'img/newyear-5.png', 'img/newyear-6.png', 'img/newyear-7.png', 'img/newyear-8.png'];
-                    button.on("pressed", async function() {
+                    button.on("pressed", function() {
                         console.log("pressed");
                         result = '<img src="' + name2[math_random_int(1, 8) - 1]+ '">';
                         document.getElementById("demo-area-01-show").style.color = '#009900';
@@ -94,7 +94,7 @@
                     }); //button.on
                 }); //boardReady
             }); //connect_btn
-        }()); //async function
+        }()); //function
     }());
     </script>
 </body>
