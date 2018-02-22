@@ -4,7 +4,17 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="shortcut icon" href="img/webduino-logo.png" type="image/vnd.microsoft.icon">
+    <link rel="shortcut icon" href="img/webduino-logo.png" type="image/x-icon">
     <title>Webduino 猜謎趣</title>
+    <link rel="stylesheet" type="text/css" href="newyear2018.css">
+    <meta name="description" content="Webduino 猜謎趣">
+    <meta itemprop="description" content="Webduino 猜謎趣">
+    <meta itemprop="image" content="https://birteliu.github.io/2018newyear/img/newyear-0.jpg">
+    <meta property="og:title" content="Webduino 猜謎趣">
+    <meta property="og:url" content="https://birteliu.github.io/2018newyear/riddle.html">
+    <meta property="og:image" content="https://birteliu.github.io/2018newyear/img/newyear-0.jpg">
+    <meta property="og:description" content="Webduino 元宵猜謎趣，連線後按壓 Smart 上的開關，就可以看看有什麼狗年謎語，一起來玩玩吧！">
     <script src="https://blocklypro.webduino.io/components/jquery/dist/jquery.min.js"></script>
     <script src="https://webduino.io/components/webduino-js/dist/webduino-all.min.js"></script>
     <script src="https://blockly.webduino.io/webduino-blockly.js"></script>
@@ -12,7 +22,7 @@
     <script src="https://blockly.webduino.io/lib/runtime.min.js"></script>
 </head>
 
-<body>
+<body style="background-color: #ffe8d4;">
     <div class="container">
         <div class="row">
             <div class="setting-content">
@@ -21,8 +31,17 @@
                 <button id="connect_btn">連線</button>
             </div>
         </div>
+        <div class="main-content">
+            <h6>按壓 Smart 按鈕一起來玩狗年猜謎趣</h6>
+            <span id="riddle-show">
+            <img src="img/riddle.png" alt="">
+        </span>
+        </div>
     </div>
-    <div><span id="demo-area-01-show">123</span></div>
+    <div id="newyear-title">
+        <p><a href="https://goo.gl/vDziY9" target="_blank">前往 Webduino 狗年吉祥話遊戲</a></p>
+    </div>
+    <div><span id="riddle-show">123</span></div>
     <script>
     (function() {
         var n;
@@ -41,51 +60,47 @@
             localStorage.boardName = deviceId.val();
             boardReady(deviceId.val(), function(board) {
                 board.samplingInterval = 250;
+                document.getElementById('ready').innerHTML = '( 已連線 )';
                 n = 1;
                 m = 1;
                 rgbled = getRGBLedCathode(board, 15, 12, 13);
                 button = getPullupButton(board, 4);
                 a = [
-                    ['兩隻狗狗在對話 ( 猜一字 )', '獄'],
-                    ['A、B、C、D 哪一隻狗不會說話？', 'A 狗，因為啞巴 ( 台語 )'],
-                    ['狗對你\'\'旺\'\'的時候.你要怎麼讓牠不叫?', '說two.因為牠不會說three'],
-                    ['為什麼遇到惡狗要對他碎碎念?', '因為"念念不忘(不汪)'],
-                    ['什麼狗得毛是綠的？', '奇異果因為（奇異狗）'],
-                    ['什麼狗不會叫', '熱狗'],
-                    ['小狗、小貓、小牛，三隻動物要背唐詩，誰是第一個？', '小狗因為 (汪汪先背) 旺旺仙貝'],
-                    ['肉包子打狗? ( 諺語 )', '有去無回'],
-                    ['狗咬人，人咬狗（猜一成語）', '以牙還牙'],
-                    ['青色的狗？( 猜一字 )', '猜']
+                    ['img/riddle-1.png', 'img/riddle-2.png'],
+                    ['img/riddle-3.png', 'img/riddle-4.png'],
+                    ['img/riddle-5.png', 'img/riddle-6.png'],
+                    ['img/riddle-7.png', 'img/riddle-8.png'],
+                    ['img/riddle-9.png', 'img/riddle-10.png'],
+                    ['img/riddle-11.png', 'img/riddle-12.png'],
+                    ['img/riddle-13.png', 'img/riddle-14.png'],
+                    ['img/riddle-15.png', 'img/riddle-16.png'],
+                    ['img/riddle-17.png', 'img/riddle-18.png'],
+                    ['img/riddle-19.png', 'img/riddle-20.png']
                 ];
-                document.getElementById("demo-area-01-show").style.fontSize = 20 + "px";
-                document.getElementById("demo-area-01-show").style.lineHeight = 26 + "px";
-                document.getElementById("demo-area-01-show").innerHTML = '按壓開關開始猜燈謎';
+                document.getElementById("riddle-show").innerHTML = '<img src="img/riddle-21.png">';
                 button.on("pressed", function() {
                     console.log("pressed");
                     m = m * -1;
                     if (m > 0 && n <= a.length) {
-                        document.getElementById("demo-area-01-show").style.color = '#ff0000';
+                        document.getElementById("riddle-show").style.color = '#ff0000';
                         rgbled.setColor('#009900');
-                        document.getElementById("demo-area-01-show").innerHTML = ([n, '/', a.length, ' 解答：', (a[n - 1])[1]].join(''));
+                        document.getElementById("riddle-show").innerHTML = (['<img src="' + (a[n - 1])[1] + '">'].join(''));
                         n = n + 1;
                     } else if (m < 0 && n <= a.length) {
-                        document.getElementById("demo-area-01-show").style.color = '#000000';
                         rgbled.setColor('#ff0000');
-                        document.getElementById("demo-area-01-show").innerHTML = ([n, '/', a.length, ' ', (a[n - 1])[0]].join(''));
+                        document.getElementById("riddle-show").innerHTML = (['<img src="' + (a[n - 1])[0] + '">'].join(''));
                     } else {
                         rgbled.setColor('#000000');
-                        document.getElementById("demo-area-01-show").style.color = '#000000';
-                        document.getElementById("demo-area-01-show").innerHTML = '遊戲結束<br/>「長按按鈕開關」重新遊戲';
+                        document.getElementById("riddle-show").innerHTML = '<img src="img/riddle-22.png">';
                     }
 
                 });
                 button.on("longPress", function() {
                     console.log("longPress");
                     rgbled.setColor('#000000');
-                    document.getElementById("demo-area-01-show").style.color = '#000000';
                     n = 1;
                     m = 1;
-                    document.getElementById("demo-area-01-show").innerHTML = '按壓開關開始猜燈謎';
+                    document.getElementById("riddle-show").innerHTML = '<img src="img/riddle-21.png">';
 
                 }); //button.on
             }); //boardReady
